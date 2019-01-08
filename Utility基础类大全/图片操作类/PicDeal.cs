@@ -770,5 +770,61 @@ namespace Utilities
             }
         }
         #endregion
+            
+       #region  image  byte[] 互相转换
+
+        /// <summary>
+        /// image 转 byte[]
+        /// </summary>
+        /// <param name="img"></param>
+        /// <returns></returns>
+        public byte[] GetBytesByImage(Image img)
+        {
+            try
+            {
+                byte[] _bytes = null;
+                if (!img.Equals(null))
+                {
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        Bitmap bmp = new Bitmap(img);
+                        bmp.Save(stream, System.Drawing.Imaging.ImageFormat.Bmp);//将图像以指定的格式存入缓存内存流
+                        _bytes = new byte[stream.Length];
+                        stream.Position = 0;//设置留的初始位置
+                        stream.Read(_bytes, 0, _bytes.Length);
+                    }
+                }
+                return _bytes;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// byte[] 转 image
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public Image GetImageByBytes(byte[] bytes)
+        {
+            try
+            {
+                Image _image = null;
+                using (MemoryStream stream = new MemoryStream(bytes))
+                {
+                    stream.Write(bytes, 0, bytes.Length);
+                    _image = Image.FromStream(stream, true);
+                }
+                return _image;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        #endregion
     }
 }

@@ -28,7 +28,7 @@ namespace Utilities
         {
             result = null;
             if (_obj != null)
-                result= _obj.GetType().GetProperty(binder.Name)?.GetValue(_obj) ?? null;
+                result= _obj.GetType().GetProperty(binder.Name)?.GetValue(_obj);
             return true;
         }
     }
